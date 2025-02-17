@@ -36,10 +36,10 @@
 
 <script>
 //Your code goes here 
-	let selectedCube = null;
+	document.addEventListener("DOMContentLoaded", () => {
+    let selectedCube = null;
     let offsetX = 0;
     let offsetY = 0;
-    let container = document.querySelector(".items");
 
     document.querySelectorAll(".item").forEach((cube) => {
         cube.addEventListener("mousedown", (event) => {
@@ -50,15 +50,19 @@
 
             selectedCube.style.position = "absolute";
             selectedCube.style.zIndex = 1000;
+
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
         });
 
-        document.addEventListener("mousemove", (event) => {
+        function onMouseMove(event) {
             if (!selectedCube) return;
 
             let newX = event.clientX - offsetX;
             let newY = event.clientY - offsetY;
 
             // Get container boundaries
+            const container = document.querySelector(".items");
             const containerRect = container.getBoundingClientRect();
             const cubeRect = selectedCube.getBoundingClientRect();
 
@@ -70,15 +74,19 @@
 
             selectedCube.style.left = `${newX}px`;
             selectedCube.style.top = `${newY}px`;
-        });
+        }
 
-        document.addEventListener("mouseup", () => {
+        function onMouseUp() {
             if (selectedCube) {
                 selectedCube.style.zIndex = 1;
                 selectedCube = null;
             }
-        });
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+        }
     });
+});
+
 </script>
 
   </body>
