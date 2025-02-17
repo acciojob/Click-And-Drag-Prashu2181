@@ -36,57 +36,7 @@
 
 <script>
 //Your code goes here 
-	document.addEventListener("DOMContentLoaded", () => {
-    let selectedCube = null;
-    let offsetX = 0;
-    let offsetY = 0;
-
-    document.querySelectorAll(".item").forEach((cube) => {
-        cube.addEventListener("mousedown", (event) => {
-            selectedCube = event.target;
-            const rect = selectedCube.getBoundingClientRect();
-            offsetX = event.clientX - rect.left;
-            offsetY = event.clientY - rect.top;
-
-            selectedCube.style.position = "absolute";
-            selectedCube.style.zIndex = 1000;
-
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-        });
-
-        function onMouseMove(event) {
-            if (!selectedCube) return;
-
-            let newX = event.clientX - offsetX;
-            let newY = event.clientY - offsetY;
-
-            // Get container boundaries
-            const container = document.querySelector(".items");
-            const containerRect = container.getBoundingClientRect();
-            const cubeRect = selectedCube.getBoundingClientRect();
-
-            // Ensure cube stays inside container
-            if (newX < containerRect.left) newX = containerRect.left;
-            if (newY < containerRect.top) newY = containerRect.top;
-            if (newX + cubeRect.width > containerRect.right) newX = containerRect.right - cubeRect.width;
-            if (newY + cubeRect.height > containerRect.bottom) newY = containerRect.bottom - cubeRect.height;
-
-            selectedCube.style.left = `${newX}px`;
-            selectedCube.style.top = `${newY}px`;
-        }
-
-        function onMouseUp() {
-            if (selectedCube) {
-                selectedCube.style.zIndex = 1;
-                selectedCube = null;
-            }
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-        }
-    });
-});
-
+	
 </script>
 
   </body>
